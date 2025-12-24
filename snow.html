@@ -1,39 +1,27 @@
 
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Snowflakes Overlay</title>
 <style>
-  html, body { margin:0; height:100%; background:transparent; }
-  .snow-container {
-    pointer-events: none;
-    position: fixed; inset: 0; z-index: 9999;
+  body {
+    margin: 0;
+    background: transparent;
     overflow: hidden;
   }
   .flake {
-    position:absolute; top:-2rem; width:6px; height:6px;
-    background: radial-gradient(circle,#fff 0 60%,transparent 61%);
-    border-radius:50%; opacity:.85;
-    filter: drop-shadow(0 0 2px rgba(255,255,255,.7));
-    animation: fall var(--dur) linear infinite, sway var(--sway) ease-in-out infinite;
+    position: fixed;
+    top: -10vh; /* start above viewport */
+    left: var(--x, 50vw); /* random horizontal position */
+    font-size: var(--size, 1rem);
+    animation: fall var(--dur, 12s) linear infinite;
+    pointer-events: none;
+    will-change: transform;
   }
-  @keyframes fall { to { transform: translateY(110vh); } }
-  @keyframes sway { 50% { transform: translateX(15px); } 100% { transform: translateX(0); } }
+  @keyframes fall {
+    from { transform: translateY(-10vh); }  /* start slightly above */
+    to   { transform: translateY(110vh); }  /* move down past bottom */
+  }
 </style>
-</head>
-<body>
-<div class="snow-container" aria-hidden="true" id="snow"></div>
-<script>
-  const c = document.getElementById('snow');
-  for (let i=0;i<80;i++){
-    const d = document.createElement('div'); d.className='flake';
-    d.style.left = Math.random()*100 + 'vw';
-    d.style.setProperty('--dur', (6 + Math.random()*8) + 's');
-    d.style.setProperty('--sway',(2 + Math.random()*4) + 's');
-    d.style.animationDelay = (-Math.random()*4) + 's';
-    c.appendChild(d);
-   }
-</script>
-</body>
+
+<!-- Example flakes -->
+<div class="flake" style="--x:20vw; --size:2rem; --dur:10s;">❄️</div>
+<div class="flake" style="--x:50vw; --size:1.5rem; --dur:12s;">❄️</div>
+<div class="flake" style="--x:80vw; --size:1rem; --dur:14s;">❄️</div>
+
